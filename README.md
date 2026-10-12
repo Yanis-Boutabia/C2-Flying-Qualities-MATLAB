@@ -44,17 +44,20 @@ Eigenvalues of the 4×4 longitudinal and lateral state matrices:
 
 The exact 4×4 results were also compared with the classical 2×2 approximations. Short period, roll and Dutch roll match within a few percent. The phugoid approximation overestimates the natural frequency by about 28% (constant-angle-of-attack assumption), and the spiral approximation is far from the exact eigenvalue, since that mode depends on a delicate balance between several lateral derivatives.
 
-![Longitudinal free response](./images/longitudinal-free-response.png)
+![Longitudinal free response](./images/fig_free_longitudinal.png)
 *Longitudinal free response (ode45, mixed initial conditions) — the fast short-period transient dies out within ~5 s, then the lightly damped phugoid dominates in Δu for several hundred seconds*
+
+![Lateral free response](./images/fig_free_lateral.png)
+*Lateral free response (ode45, mixed initial conditions) — a brief Dutch roll transient in the first seconds, followed by the slow spiral divergence in Δφ and Δv over the 300 s window*
 
 ## Frequency-domain analysis
 
 Control transfer functions are computed from the state-space matrices as X(s)/η(s) = (sI − A)⁻¹B, and the Bode diagrams are obtained by evaluating this expression numerically at s = jω over a logarithmic frequency range.
 
-![Bode diagram q/δe](./images/bode-pitch-rate.png)
+![Bode diagram q/δe](./images/fig_Bode_q_de.png)
 *Bode diagram of pitch rate response to elevator (q/δe) — two resonance peaks, at the phugoid (~0.07 rad/s) and short-period (~3.5 rad/s) frequencies*
 
-![Root locus](./images/root-locus.png)
+![Root locus](./images/fig_RootLocus.png)
 *Root locus of the four main transfer functions (q/δe, θ/δe, p/δa, r/δr) with s-plane grid — roll mode far left on the real axis, Dutch roll pair near −0.4 ± 4.5j, and the slightly unstable spiral mode just right of the imaginary axis*
 
 ## Flying qualities assessment (MIL-F-8785C, Class I, Category B)
@@ -85,12 +88,12 @@ Both loops use full-state feedback gains computed by pole placement (A* = A − 
 
 **Pitch damper:** for a unit perturbation in Δw, the peak pitch-rate response is reduced by about 44% and the peak pitch attitude drops from about −0.12° to −0.075°.
 
-![SAS pitch damper](./images/sas-pitch-damper.png)
+![SAS pitch damper](./images/fig_SAS_PitchDamper.png)
 *Pitch damper — original (blue dashed) vs augmented (red solid) response to a unit Δw perturbation. The phugoid drift in Δu is intentionally left unchanged.*
 
 **Yaw damper:** the Dutch roll oscillation, which persisted for about 15 s, is essentially damped within 5 s, and the product ξ·ωₙ rises from 0.417 to 0.905 (+117%). The spiral divergence is intentionally left unchanged.
 
-![SAS yaw damper](./images/sas-yaw-damper.png)
+![SAS yaw damper](./images/fig_SAS_YawDamper.png)
 *Yaw damper — original (blue dashed) vs augmented (red solid) response to a unit sideslip perturbation*
 
 ## Key takeaways
@@ -106,7 +109,7 @@ C2-Flying-Qualities-MATLAB/
 ├── README.md
 ├── code/
 │   └── C2_flying_qualities.m     # full MATLAB script (data, matrices, modes, responses, MIL assessment, SAS)
-├── images/                        # figures used in this README
+├── images/                        # figures exported by the script (report_figures/)
 └── report/
     └── Homework_Report_C2.pdf     # full report (theory, derivations, results)
 ```
@@ -116,6 +119,3 @@ Running the script reproduces the full analysis and exports the report figures t
 ## Tools
 
 `MATLAB` — `eig`, `ode45`, `place`, `ss`/`initial`, state-space modeling, numerical frequency response
-
----
-*Academic project — IPSA Paris, Aéro 4PA2, April 2026.*
