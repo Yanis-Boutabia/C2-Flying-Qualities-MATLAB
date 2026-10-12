@@ -73,17 +73,17 @@ CAP is computed from n/α = q̄·S·C_Lα/(m·g) = 37.04 g/rad and CAP = ωₙ_S
 
 ## Stability augmentation system (pole placement)
 
-Both loops use full-state feedback gains computed by pole placement (A* = A − B·Kᵀ), after checking that the controllability matrix has full rank 4 from the elevator (longitudinal) and rudder (lateral) inputs.
+Both loops use full-state feedback gains computed by pole placement (A* = A − B·Kᵀ). The report verifies that the controllability matrix has full rank 4 from the elevator (longitudinal) and rudder (lateral) inputs.
 
 | | Pitch damper | Yaw damper |
 |---|---|---|
 | Target | ξ_SP: 0.816 → 0.95 | ξ_DR: 0.092 → 0.20 |
 | New poles | −3.2892 ± 1.0811j | −0.9047 ± 4.4319j |
 | Gain vector K | [0.0048, 0.0682, −6.4794, 0.0093] | [−0.0110, 0.0859, −12.022, 0.6319] |
-| Dominant term | pitch-rate feedback (−6.48) | yaw-rate feedback (−12.02) |
+| Dominant term | pitch-rate feedback (k₃ = −6.48) | yaw-rate feedback (k₃ = −12.02) |
 | Preserved | ωₙ_SP and phugoid poles | ωₙ_DR, roll and spiral poles |
 
-**Pitch damper:** for a unit perturbation in Δw, the peak pitch rate drops from −3 to −1.8 rad/s (−40%) and the peak pitch attitude from −0.125° to −0.075°.
+**Pitch damper:** for a unit perturbation in Δw, the peak pitch-rate response is reduced by about 44% and the peak pitch attitude drops from about −0.12° to −0.075°.
 
 ![SAS pitch damper](./images/sas-pitch-damper.png)
 *Pitch damper — original (blue dashed) vs augmented (red solid) response to a unit Δw perturbation. The phugoid drift in Δu is intentionally left unchanged.*
@@ -111,11 +111,11 @@ C2-Flying-Qualities-MATLAB/
     └── Homework_Report_C2.pdf     # full report (theory, derivations, results)
 ```
 
-Running the script reproduces the full analysis and exports the report figures to a `report_figures/` folder. The pole placement step uses `place` (Control System Toolbox).
+Running the script reproduces the full analysis and exports the report figures to a `report_figures/` folder. It requires MATLAB R2020a or later (`exportgraphics`) and the Control System Toolbox (`place`, `ss`, `initial`).
 
 ## Tools
 
-`MATLAB` — `eig`, `ode45`, `place`, state-space modeling, numerical frequency response
+`MATLAB` — `eig`, `ode45`, `place`, `ss`/`initial`, state-space modeling, numerical frequency response
 
 ---
 *Academic project — IPSA Paris, Aéro 4PA2, April 2026.*
